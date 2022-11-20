@@ -1,0 +1,3 @@
+# phuket
+
+Part of globtrotter
