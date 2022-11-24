@@ -1,4 +1,4 @@
-package main
+package countries
 
 type Country struct {
 	code        string

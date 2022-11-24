@@ -1,6 +1,8 @@
-package main
+package countries
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestCountry_Code(t *testing.T) {
 	code := "PL"

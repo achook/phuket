@@ -1,9 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"phuket/database"
+)
 
 func main() {
-	db := Database{}
+	db := database.Database{}
 	if err := db.Initialize(); err != nil {
 		fmt.Println(err)
 		return
