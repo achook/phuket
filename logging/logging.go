@@ -29,9 +29,9 @@ func init() {
 		panic(m)
 	}
 
-	logger.infoLog = log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime|log.Lshortfile)
-	logger.errorLog = log.New(os.Stderr, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
-	logger.fatalLog = log.New(os.Stderr, "FATAL: ", log.Ldate|log.Ltime|log.Lshortfile)
+	logger.infoLog = log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime)
+	logger.errorLog = log.New(os.Stderr, "ERROR: ", log.Ldate|log.Ltime)
+	logger.fatalLog = log.New(os.Stderr, "FATAL: ", log.Ldate|log.Ltime)
 }
 
 // LogInfo logs a message that is not an error.

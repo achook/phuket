@@ -1,19 +1,18 @@
 package server
 
-import "phuket/database"
+import (
+	"github.com/gorilla/mux"
+	"net/http"
+	"strconv"
+)
 
-type Server struct {
-	db *database.Database
-}
-
-func NewServer() (*Server, error) {
-	d, err := database.NewDatabase()
+func SouvenirHandler(w http.ResponseWriter, r *http.Request) {
+	rawID := mux.Vars(r)["id"]
+	id64, err := strconv.ParseInt(rawID, 10, 64)
 	if err != nil {
-		return nil, err
+		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
-
-	s := new(Server)
-	s.db = d
-
-	return s, nil
+	id := int(id64)
+	id = id + 1
 }

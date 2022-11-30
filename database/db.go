@@ -10,38 +10,9 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type Database struct {
-	db *sql.DB
-}
+var db *sql.DB
 
-func (d *Database) connect(dbConfig string) error {
-	db, err := sql.Open("postgres", dbConfig)
-	if err != nil {
-		return err
-	}
-
-	d.db = db
-	return nil
-}
-
-func (d *Database) close() error {
-	return d.db.Close()
-}
-
-func (d *Database) Query(query string) (*sql.Rows, error) {
-	return d.db.Query(query)
-}
-
-func (d *Database) QueryRow(query string) *sql.Row {
-	return d.db.QueryRow(query)
-}
-
-func (d *Database) Exec(query string) (sql.Result, error) {
-	return d.db.Exec(query)
-}
-
-func NewDatabase() (*Database, error) {
-	d := new(Database)
+func connect() error {
 
 	user := os.Getenv("POSTGRES_USER")
 	if user == "" {
@@ -54,9 +25,28 @@ func NewDatabase() (*Database, error) {
 	}
 
 	conf := fmt.Sprintf("user=%s dbname=%s sslmode=disable", user, dbName)
-	if err := d.connect(conf); err != nil {
-		return d, err
+
+	var err error
+	db, err = sql.Open("postgres", conf)
+	if err != nil {
+		return err
 	}
 
-	return d, nil
+	return nil
+}
+
+func close() error {
+	return db.Close()
+}
+
+func Query(query string, args ...any) (*sql.Rows, error) {
+	return db.Query(query, args...)
+}
+
+func QueryRow(query string, args ...any) *sql.Row {
+	return db.QueryRow(query, args...)
+}
+
+func Exec(query string, args ...any) (sql.Result, error) {
+	return db.Exec(query, args...)
 }
